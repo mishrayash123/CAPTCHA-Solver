@@ -24,7 +24,7 @@ const CaptchaBox = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/captcha/getCaptcha",
+        "https://backendofcaptchasolver.onrender.com/api/captcha/getCaptcha",
         {
           email: email,
         }
@@ -56,7 +56,7 @@ const CaptchaBox = () => {
   const verifyCaptcha = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/captcha/verifyCaptcha",
+        "https://backendofcaptchasolver.onrender.com/api/captcha/verifyCaptcha",
         {
           email: email,
           inputValue,
@@ -90,7 +90,7 @@ const CaptchaBox = () => {
 
       console.log("Name sent for payout:", email);
       const response = await axios.post(
-        "http://localhost:5000/api/razorpay/payout",
+        "https://backendofcaptchasolver.onrender.com/api/razorpay/payout",
         { email: email }
       );
 
