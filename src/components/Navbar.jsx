@@ -1,6 +1,7 @@
 import { Transition } from "@headlessui/react";
 import React, { useState, useRef, useEffect } from "react";
 import { useAuth } from "../AuthContext";
+import pic from "./Images/profile.jpg";
 
 const Navbar = () => {
   const { isLoggedIn, logout} = useAuth();
@@ -51,7 +52,7 @@ const Navbar = () => {
                 <a
                   href="/"
                 >
-                Assignment
+                Captcha Solver
                 </a>
               </div>
               <div className="hidden md:block">
@@ -77,7 +78,11 @@ const Navbar = () => {
                         onClick={handleDropdownClick}
                         className="w-12 h-12 p-1 relative group rounded-full overflow-hidden focus:outline-none"
                       >
-                        Logout
+                        <img
+                          className="object-cover w-full h-full rounded-full border-solid border-2 border-black group-hover:opacity-70"
+                          src={pic}
+                          alt="Profile"
+                        />
                       </button>
                       {isDropdownOpen && (
                         <div className=" z-50 origin-top-right absolute right-0 mt-3 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">

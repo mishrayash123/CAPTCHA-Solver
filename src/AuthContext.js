@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const authToken = localStorage.getItem("token");
-    const id = localStorage.getItem("userId");
 
   useEffect(() => {
     
@@ -30,7 +29,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("token");
-    localStorage.removeItem("userId");
   };
 
   return (

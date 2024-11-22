@@ -1,12 +1,9 @@
-// section 1: importing dependencies and components
 import React, { useState ,useEffect} from "react";
 import CustomButton from "../customButton/Button";
 import { FaDollarSign, FaPaypal } from "react-icons/fa";
 import axios from "axios";
 
-// section 2: defining the CaptchaBox component
 const CaptchaBox = () => {
-  // section 3: defining much needed state variables
   const [captcha, setCaptcha] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +11,6 @@ const CaptchaBox = () => {
   const [email, setemail] = useState(localStorage.getItem("email"));
   const [captchaVisible, setCaptchaVisible] = useState(false);
 
-  // section 4: defining the fetchCaptcha function
   const fetchCaptcha = async () => {
     console.log("Name sent for captcha:", email);
     if (!email) {
@@ -52,7 +48,6 @@ const CaptchaBox = () => {
     fetchCaptcha();
   }, []);
 
-  // section 5: defining the verifyCaptcha function
   const verifyCaptcha = async () => {
     try {
       const response = await axios.post(
@@ -79,16 +74,16 @@ const CaptchaBox = () => {
       setMessage("Error verifying captcha. Please try again.");
     }
   };
-
-  // section 6: defining the razorpay function
+  
   const handlePayout = async () => {
     try {
       if (typeof window.Razorpay === "undefined") {
         alert("Razorpay SDK not loaded. Please refresh and try again.");
         return;
       }
+ 
+      alert("Your amount deducted if there transaction will be failed so we will refund it");
 
-      console.log("Name sent for payout:", email);
       const response = await axios.post(
         "https://backendofcaptchasolver.onrender.com/api/razorpay/payout",
         { email: email }
@@ -125,22 +120,10 @@ const CaptchaBox = () => {
     }
   };
 
-  // section 7: rendering the CaptchaBox component
   return (
     <>
-      {/* {!captchaVisible && (
-        <div className="flex justify-center items-center w-64">
-          <input
-            type="text"
-            placeholder="Enter your user name"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
-            className="w-full border border-gray-300 rounded-md py-2 px-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        </div>
-      )} */}
       {captchaVisible && (
-        <p className="text-lg font-mono font-bold text-gray-800">
+        <p className="text-lg font-mono font-bold text-gray-800 m-2">
           User: {email}
         </p>
       )}
@@ -149,26 +132,31 @@ const CaptchaBox = () => {
           <CustomButton
             text="Get Captcha"
             
-            className="w-full bg-indigo-700 text-white rounded-full px-6 py-2 text-sm shadow-md"
+            className="w-full bg-indigo-700 text-white rounded-full px-6 py-2 text-sm shadow-2xl"
           />
         </div>
       )}
 
       {captchaVisible && (
         <>
-          <div className="flex justify-center items-center w-64 h-28 bg-white rounded-md border border-black text-3xl shadow-md">
-            <span className="text-lg font-mono font-bold text-gray-800">
+          <div className="flex justify-center items-center w-64 h-28 bg-white rounded-md border border-gray-300 text-3xl shadow-2xl">
+            <span className="text-2xl  font-bold text-gray-800">
               {captcha}
             </span>
           </div>
 
-          <div className="relative mt-4 flex justify-center">
+          <div className="relative mt-4 flex justify-center space-x-4">
             <input
               type="text"
               placeholder="Enter Captcha"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="w-full border border-gray-300 rounded-md py-2 pl-4 pr-20 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+            <CustomButton
+            onClick={fetchCaptcha}
+              text="Skip"
+              className="w-full bg-indigo-700 text-white rounded-full px-6 py-2 text-sm shadow-md"
             />
           </div>
 
@@ -184,17 +172,15 @@ const CaptchaBox = () => {
       {message && (
         <p className="mt-2 text-sm font-medium text-gray-700">{message}</p>
       )}
-
-      {/* Stats */}
       <div className="flex items-center justify-center mt-6">
-        <button className="bg-gray-100 text-blue-500 m-4 px-4 py-2 text-sm shadow">
+        <button className="bg-gray-100 text-blue-500 m-4 px-4 py-2 text-sm shadow-md">
           <FaDollarSign />
           {cashAmount}
         </button>
         {captchaVisible && (
           <button
             onClick={handlePayout}
-            className="bg-gray-100 text-blue-500 m-4 px-4 py-2 text-sm shadow"
+            className="bg-gray-100 text-blue-500 m-4 px-4 py-2 text-sm shadow-md"
           >
             <FaPaypal />
             Razorpay

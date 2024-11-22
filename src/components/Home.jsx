@@ -20,6 +20,7 @@ function Home() {
               <li>*All words are case sensitive.</li>
               <li>*Calculative Captchas must be solved.</li>
               <li>*Length of Captcha will be between 6 to 12 characters.</li>
+              <li>*There result also be negative number eg.(5-8=-3)</li>
             </ul>
           </div>
         </div>
