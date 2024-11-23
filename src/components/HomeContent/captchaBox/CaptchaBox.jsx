@@ -4,12 +4,22 @@ import { FaDollarSign, FaPaypal } from "react-icons/fa";
 import axios from "axios";
 
 const CaptchaBox = () => {
+  const [timeLeft, setTimeLeft] = useState(20); 
   const [captcha, setCaptcha] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [message, setMessage] = useState("");
   const [cashAmount, setCashAmount] = useState(0);
   const [email, setemail] = useState(localStorage.getItem("email"));
   const [captchaVisible, setCaptchaVisible] = useState(false);
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+      return () => clearTimeout(timer); 
+    } else {
+      fetchCaptcha()
+    }
+  }, [timeLeft]);
 
   const fetchCaptcha = async () => {
     console.log("Name sent for captcha:", email);
@@ -31,6 +41,7 @@ const CaptchaBox = () => {
         if (response.data.Amount === 0) {
           setCashAmount(0);
         }
+        setTimeLeft(20)
         setCashAmount(response.data.Amount);
         setCaptchaVisible(true);
         setMessage("");
@@ -63,6 +74,7 @@ const CaptchaBox = () => {
         setCashAmount(response.data.Amount);
         setCaptcha(response.data.captcha);
         setInputValue("");
+        setTimeLeft(20)
       } else {
         setMessage("Invalid captcha. Please try again.");
       }
@@ -143,6 +155,14 @@ const CaptchaBox = () => {
             <span className="text-2xl  font-bold text-gray-800">
               {captcha}
             </span>
+          </div>
+
+          <div className="relative mt-4 flex justify-center space-x-8">
+          <p className="mt-2 text-sm font-medium text-red-700">Special Alpha Numeric Case Sensitive*</p>
+            <CustomButton
+              text={timeLeft}
+              className="w-full bg-indigo-700 text-white rounded-full px-6 py-2 text-sm shadow-md"
+            />
           </div>
 
           <div className="relative mt-4 flex justify-center space-x-4">
